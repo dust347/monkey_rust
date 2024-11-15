@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum TokenType {
     Illegal,
     EOF,
@@ -49,10 +49,19 @@ fn look_up_ident(ident: &str) -> TokenType {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Token {
     pub typ: TokenType,
     pub literal: String,
+}
+
+impl Default for Token {
+    fn default() -> Self {
+        Token {
+            typ: TokenType::Illegal,
+            literal: String::new(),
+        }
+    }
 }
 
 impl Token {
@@ -93,4 +102,13 @@ impl Token {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use crate::token::TokenType;
+
+    #[test]
+    fn test_enum() {
+        println!("{}", TokenType::Illegal as i32);
+        println!("{}", TokenType::EOF as i32);
+        println!("{}", TokenType::Eq as i32);
+    }
+}
